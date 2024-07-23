@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cobros" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23015f77-25f7-4a14-b073-44cc103ae20b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     cobros.`idcobros` AS cobros_idcobros,
+     cobros.`cob_fecha` AS cobros_cob_fecha,
+     cobros.`cob_estado` AS cobros_cob_estado,
+     clientes.`idclientes` AS clientes_idclientes,
+     clientes.`cli_nombre` AS clientes_cli_nombre,
+     clientes.`cli_apellido` AS clientes_cli_apellido,
+     detallecobros.`ventas_idventas` AS detallecobros_ventas_idventas,
+     detallecobros.`cobros_idcobros` AS detallecobros_cobros_idcobros,
+     detallecobros.`monto` AS detallecobros_monto,
+     aperturas.`idusuarios` AS aperturas_idusuarios,
+     usuarios.`usu_nombre` AS usuarios_usu_nombre,
+	CONCAT(clientes.`cli_nombre`,' ', clientes.`cli_apellido`) as cliente
+FROM
+     `clientes` clientes INNER JOIN `cobros` cobros ON clientes.`idclientes` = cobros.`clientes_idclientes`
+     INNER JOIN `detallecobros` detallecobros ON cobros.`idcobros` = detallecobros.`cobros_idcobros`
+     INNER JOIN `aperturas` aperturas ON cobros.`aperturas_idaperturas` = aperturas.`idaperturas`
+     INNER JOIN `usuarios` usuarios ON aperturas.`idusuarios` = usuarios.`idusuarios`]]>
+	</queryString>
+	<field name="cobros_idcobros" class="java.lang.Integer"/>
+	<field name="cobros_cob_fecha" class="java.sql.Date"/>
+	<field name="cobros_cob_estado" class="java.lang.String"/>
+	<field name="clientes_idclientes" class="java.lang.Integer"/>
+	<field name="clientes_cli_nombre" class="java.lang.String"/>
+	<field name="clientes_cli_apellido" class="java.lang.String"/>
+	<field name="detallecobros_ventas_idventas" class="java.lang.Integer"/>
+	<field name="detallecobros_cobros_idcobros" class="java.lang.Integer"/>
+	<field name="detallecobros_monto" class="java.lang.Integer"/>
+	<field name="aperturas_idusuarios" class="java.lang.Integer"/>
+	<field name="usuarios_usu_nombre" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="553" height="95" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="e61e5abb-d7c3-4437-b167-6cf58ab2fc97"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="553" height="66" forecolor="#000000" uuid="34837aef-6570-4ff1-8c44-eea79c91cf0a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="36" isBold="false"/>
+					</textElement>
+					<text><![CDATA[REPORTES DE COBROS]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="66" width="553" height="32" forecolor="#000000" backcolor="#CCCCCC" uuid="50bb29f0-bddb-4d7a-ab37-c3d85084b225"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="409" y="0" width="144" height="29" forecolor="#FFFFFF" uuid="f4241e6a-b464-47df-8564-4d340cdbf8a9"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="1" width="555" height="25" backcolor="#CCCCCC" uuid="53228835-c633-474f-a7e6-79cacb79987e"/>
+			</frame>
+			<staticText>
+				<reportElement x="2" y="1" width="44" height="26" backcolor="#CCCCCC" uuid="30042a86-2b9a-43fb-8813-7d2b9de8b436"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="0" width="104" height="26" backcolor="#CCCCCC" uuid="80f64068-86cc-442a-ae1e-f541b0f37c34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="1" width="106" height="26" backcolor="#CCCCCC" uuid="8ebd2a76-d362-4396-8013-0766e3a43aa8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="1" width="79" height="26" backcolor="#CCCCCC" uuid="5ef70ba6-4143-4bc1-a122-8dd4a6f938b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="1" width="114" height="26" backcolor="#CCCCCC" uuid="43eff642-9e6c-4573-a043-f0d9798c3ba9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="1" width="105" height="26" backcolor="#CCCCCC" uuid="8f1fd079-1c5a-45fb-a745-872434117fcf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAJERO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="22" uuid="0f742d7c-bafa-45f2-a36f-f0d6811b57e7"/>
+				<textField>
+					<reportElement x="2" y="0" width="45" height="22" uuid="6c6af858-6018-4eeb-9eba-a8b77b2a5343"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cobros_idcobros}]]></textFieldExpression>
+				</textField>
+				<textField pattern="yyyy/MM/dd">
+					<reportElement x="47" y="0" width="104" height="22" uuid="1ba49f56-9ff2-4a17-8253-f30edd993763"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cobros_cob_fecha}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="151" y="0" width="106" height="22" uuid="569c530a-1d86-46d1-9406-80f0ab4afae6"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cobros_cob_estado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="257" y="0" width="79" height="22" uuid="e3129980-83f6-45d3-a536-f1f7623f2dd0"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{detallecobros_monto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="0" width="114" height="22" uuid="a860ec32-d7bd-484c-854f-cbeb63355169"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="450" y="0" width="103" height="22" uuid="3b9cbad8-d62d-48ab-9237-b71283be7dd8"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{usuarios_usu_nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="24df2bcf-a9be-40af-ae29-47195f90c172"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="75bcdde8-0352-42cc-b4e5-85c27e9040c2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="0696c50e-0600-4be7-8f11-491d4411284e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="6aa1765e-16fc-4d90-8ce2-31d3291c1270"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

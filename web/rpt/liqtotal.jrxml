@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="liqtotal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="42edfbea-feeb-4971-b72f-41f72333b8bf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="factura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH suma1 AS (
+    SELECT COALESCE(ROUND(SUM(det_cantidad * det_precio) / 21, 0), 0) AS liq5
+    FROM detalleventas
+    INNER JOIN productos ON detalleventas.idproductos = productos.idproductos
+    WHERE productos.iva = '5' AND idventas = $P{factura}
+),
+suma2 AS (
+    SELECT COALESCE(ROUND(SUM(det_cantidad * det_precio) / 11, 0), 0) AS liq10
+    FROM detalleventas
+    INNER JOIN productos ON detalleventas.idproductos = productos.idproductos
+    WHERE productos.iva = '10' AND idventas = $P{factura}
+)
+SELECT (liq5 + liq10) AS liqtotal
+FROM suma1, suma2;
+]]>
+	</queryString>
+	<field name="liqtotal" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="1e7b7f63-2cc8-4210-afce-fda33d3fefc1"/>
+				<textFieldExpression><![CDATA[$F{liqtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

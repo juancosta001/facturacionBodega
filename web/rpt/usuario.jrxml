@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="usuario" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a09ffbd-be8d-4f62-bd98-eaf1d384aa52">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     usuarios.`idusuarios` AS usuarios_idusuarios,
+     usuarios.`usu_nombre` AS usuarios_usu_nombre,
+     usuarios.`usu_clave` AS usuarios_usu_clave,
+     usuarios.`usu_tipo` AS usuarios_usu_tipo,
+     usuarios.`usu_estado` AS usuarios_usu_estado,
+     usuarios.`idpersonales` AS usuarios_idpersonales,
+     personales.`idpersonales` AS personales_idpersonales,
+     personales.`per_nombre` AS personales_per_nombre
+FROM
+     `personales` personales INNER JOIN `usuarios` usuarios ON personales.`idpersonales` = usuarios.`idpersonales`]]>
+	</queryString>
+	<field name="usuarios_idusuarios" class="java.lang.Integer"/>
+	<field name="usuarios_usu_nombre" class="java.lang.String"/>
+	<field name="usuarios_usu_clave" class="java.lang.String"/>
+	<field name="usuarios_usu_tipo" class="java.lang.String"/>
+	<field name="usuarios_usu_estado" class="java.lang.String"/>
+	<field name="usuarios_idpersonales" class="java.lang.Integer"/>
+	<field name="personales_idpersonales" class="java.lang.Integer"/>
+	<field name="personales_per_nombre" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+	</group>
+	<title>
+		<band height="99" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="66" width="553" height="32" forecolor="#000000" backcolor="#CCCCCC" uuid="f4a32c25-9985-4123-9c9c-094c9982ec17"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="404" y="0" width="149" height="32" forecolor="#FFFFFF" uuid="376a77c5-6fab-4854-b2dd-e936ace782d3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="555" height="66" forecolor="#000000" uuid="10ab00c4-4f85-4af4-967a-bd3c5ac1efe0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36" isBold="false"/>
+				</textElement>
+				<text><![CDATA[REPORTES DE USUARIOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="2" width="555" height="24" forecolor="#B89F7D" backcolor="#CCCCCC" uuid="cc8d64e0-398b-44e2-968b-b1ba6ea82e75"/>
+				<staticText>
+					<reportElement x="0" y="0" width="69" height="24" uuid="007ad8e9-b671-425a-ada5-9cac848a367c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="69" y="0" width="143" height="24" uuid="183c3d4d-8dfe-44a9-829a-6bad69193de2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOMBRE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="212" y="0" width="104" height="24" uuid="a969369b-e659-44a4-9b22-1aa5636650f3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="316" y="0" width="115" height="24" uuid="36ae6bb5-e63d-4143-97de-e4e86f63f75f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESTADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="431" y="0" width="124" height="24" uuid="e99bf0b9-f308-43bf-91cc-67d9f49cf046"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PERSONAL]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="26" uuid="c1e36118-4ba4-4b9e-a47c-20e0cf0ad7fe"/>
+				<textField>
+					<reportElement x="0" y="0" width="71" height="20" uuid="8f7be017-d301-482f-83db-776769da5a8f"/>
+					<textFieldExpression><![CDATA[$F{usuarios_idusuarios}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="71" y="0" width="143" height="20" uuid="6f9105cb-1532-4370-bd0e-b40bbafdcea6"/>
+					<textFieldExpression><![CDATA[$F{usuarios_usu_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="214" y="0" width="104" height="20" uuid="be60f70d-8a5a-473f-90c7-a4000cf492c8"/>
+					<textFieldExpression><![CDATA[$F{usuarios_usu_tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="318" y="0" width="115" height="20" uuid="aa8ed9da-f969-43c9-83e1-423d9653255e"/>
+					<textFieldExpression><![CDATA[$F{usuarios_usu_estado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="433" y="0" width="120" height="20" uuid="e5b7da13-9e1d-4b22-a416-2a300bb089e1"/>
+					<textFieldExpression><![CDATA[$F{personales_per_nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="52187dd9-1265-459a-affe-d194ed06039e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="185586ed-eadb-4a51-8753-2045a787eb65"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="22993341-9b7c-470b-aa4c-3112a6a827f9"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="6d0b9668-f224-4b20-8277-d60415dfa6a9"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

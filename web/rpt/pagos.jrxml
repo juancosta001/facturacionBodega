@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pagos" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d293302f-d7a1-4ed5-80e7-8eab0afc775c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     pagos.`idpagos` AS pagos_idpagos,
+     pagos.`pag_fecha` AS pagos_pag_fecha,
+     pagos.`pag_estado` AS pagos_pag_estado,
+     pagos.`proveedores_idproveedores` AS pagos_proveedores_idproveedores,
+     pagos.`aperturas_idaperturas` AS pagos_aperturas_idaperturas,
+     detallepagos.`pagos_idpagos` AS detallepagos_pagos_idpagos,
+     detallepagos.`compras_idcompras` AS detallepagos_compras_idcompras,
+     detallepagos.`monto` AS detallepagos_monto,
+     proveedores.`idproveedores` AS proveedores_idproveedores,
+     proveedores.`prov_nombre` AS proveedores_prov_nombre,
+     aperturas.`idaperturas` AS aperturas_idaperturas,
+     usuarios.`idusuarios` AS usuarios_idusuarios,
+     usuarios.`usu_nombre` AS usuarios_usu_nombre,
+     aperturas.`idusuarios` AS aperturas_idusuarios
+FROM
+     `pagos` pagos INNER JOIN `detallepagos` detallepagos ON pagos.`idpagos` = detallepagos.`pagos_idpagos`
+     INNER JOIN `proveedores` proveedores ON pagos.`proveedores_idproveedores` = proveedores.`idproveedores`
+     INNER JOIN `aperturas` aperturas ON pagos.`aperturas_idaperturas` = aperturas.`idaperturas`
+     INNER JOIN `usuarios` usuarios ON aperturas.`idusuarios` = usuarios.`idusuarios`]]>
+	</queryString>
+	<field name="pagos_idpagos" class="java.lang.Integer"/>
+	<field name="pagos_pag_fecha" class="java.sql.Date"/>
+	<field name="pagos_pag_estado" class="java.lang.String"/>
+	<field name="pagos_proveedores_idproveedores" class="java.lang.Integer"/>
+	<field name="pagos_aperturas_idaperturas" class="java.lang.Integer"/>
+	<field name="detallepagos_pagos_idpagos" class="java.lang.Integer"/>
+	<field name="detallepagos_compras_idcompras" class="java.lang.Integer"/>
+	<field name="detallepagos_monto" class="java.lang.Integer"/>
+	<field name="proveedores_idproveedores" class="java.lang.Integer"/>
+	<field name="proveedores_prov_nombre" class="java.lang.String"/>
+	<field name="aperturas_idaperturas" class="java.lang.Integer"/>
+	<field name="usuarios_idusuarios" class="java.lang.Integer"/>
+	<field name="usuarios_usu_nombre" class="java.lang.String"/>
+	<field name="aperturas_idusuarios" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="553" height="68" backcolor="#FFFFFF" uuid="e922b623-1d58-4f4e-89a6-c0639018d308"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="553" height="66" forecolor="#000000" backcolor="#000000" uuid="500eb023-1276-405a-90e7-2e9c0471686c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[REPORTES DE PAGOS]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="68" width="555" height="32" forecolor="#000000" backcolor="#CCCCCC" uuid="4e2944c3-d09f-42ce-b35d-39115c894cc9"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="409" y="0" width="144" height="32" forecolor="#FFFFFF" uuid="597956c1-6bdc-4917-99dc-321b6006254b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="2" y="0" width="551" height="28" uuid="418d0d1d-ffaf-446a-8d12-0314562a522f"/>
+				<staticText>
+					<reportElement x="0" y="0" width="47" height="28" uuid="f1f4b914-eab0-41b3-a7ed-d435b6cff4fd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="136" y="0" width="88" height="28" uuid="b7b65c7e-e8b6-4d70-9151-41a963cca53d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESTADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="47" y="0" width="89" height="28" uuid="ea6e82a2-954e-48c9-bbfb-55f3dd57ed37"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="224" y="0" width="78" height="28" uuid="069a0913-8d71-4d89-b525-167bda75af40"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="302" y="0" width="133" height="28" uuid="ba6add47-1934-4c65-9854-f634928189ba"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROVEEDOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="435" y="0" width="116" height="28" uuid="30cd3da8-35dd-45dc-b4ac-9d1b8e1616e9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CAJERO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="21" uuid="513e9f2a-804b-4164-81f6-1a68cf72decd"/>
+				<textField>
+					<reportElement x="2" y="0" width="47" height="20" uuid="b0e72a43-9b58-4b44-9c6c-ecd1f405acb1"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{pagos_idpagos}]]></textFieldExpression>
+				</textField>
+				<textField pattern="yyyy/MM/dd">
+					<reportElement x="49" y="1" width="89" height="20" uuid="f5d6fb4c-deb0-401d-9a25-eedf0915d5ea"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{pagos_pag_fecha}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="138" y="1" width="88" height="20" uuid="4e4f96e7-d27b-4032-bc8a-6a966f7cc110"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{pagos_pag_estado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="226" y="1" width="78" height="20" uuid="01853a19-291a-4646-856e-a33a58ec6882"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{detallepagos_monto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="304" y="0" width="133" height="20" uuid="f3b0b64b-b17a-41d0-b027-3ae26aa78c77"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{proveedores_prov_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="437" y="0" width="116" height="20" uuid="a091e21f-b06f-404e-a012-bc60f1001be8"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{usuarios_usu_nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

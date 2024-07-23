@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="liq5" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="67a71b87-ad69-4461-bac2-f0e5f2e23432">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="factura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detalleventas.`idventas` AS detalleventas_idventas,
+     detalleventas.`idproductos` AS detalleventas_idproductos,
+     detalleventas.`det_precio` AS detalleventas_det_precio,
+     detalleventas.`det_cantidad` AS detalleventas_det_cantidad,
+     productos.`idproductos` AS productos_idproductos,
+     productos.`iva` AS productos_iva,
+     ventas.`idventas` AS ventas_idventas,
+COALESCE(round(sum(detalleventas.`det_precio`*detalleventas.`det_cantidad`)/21),0) as subtotal
+FROM
+     `productos` productos INNER JOIN `detalleventas` detalleventas ON productos.`idproductos` = detalleventas.`idproductos`
+     INNER JOIN `ventas` ventas ON detalleventas.`idventas` = ventas.`idventas`
+WHERE detalleventas.`idventas`=$P{factura} and productos.`iva`='5']]>
+	</queryString>
+	<field name="detalleventas_idventas" class="java.lang.Integer"/>
+	<field name="detalleventas_idproductos" class="java.lang.Integer"/>
+	<field name="detalleventas_det_precio" class="java.lang.Integer"/>
+	<field name="detalleventas_det_cantidad" class="java.lang.Integer"/>
+	<field name="productos_idproductos" class="java.lang.Integer"/>
+	<field name="productos_iva" class="java.lang.String"/>
+	<field name="ventas_idventas" class="java.lang.Integer"/>
+	<field name="subtotal" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="e0ab541c-a609-4a7f-b68a-7f7165509170"/>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

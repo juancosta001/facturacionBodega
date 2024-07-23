@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detallefactura" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4f22c33f-5d70-4bab-8766-62815387b0f5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="factura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detalleventas.`idventas` AS detalleventas_idventas,
+     detalleventas.`idproductos` AS detalleventas_idproductos,
+     detalleventas.`det_precio` AS detalleventas_det_precio,
+     detalleventas.`det_cantidad` AS detalleventas_det_cantidad,
+     productos.`idproductos` AS productos_idproductos,
+     productos.`pro_nombre` AS productos_pro_nombre,
+     productos.`iva` AS productos_iva,
+if(productos.`iva`='0',detalleventas.`det_precio` *  detalleventas.`det_cantidad`, ' ') as exenta,
+if(productos.`iva`='5',detalleventas.`det_precio` *  detalleventas.`det_cantidad`, ' ') as cinco,
+if(productos.`iva`='10',detalleventas.`det_precio` *  detalleventas.`det_cantidad`, ' ') as diez
+FROM
+     `productos` productos INNER JOIN `detalleventas` detalleventas ON productos.`idproductos` = detalleventas.`idproductos`
+
+where detalleventas.`idventas`=$P{factura}]]>
+	</queryString>
+	<field name="detalleventas_idventas" class="java.lang.Integer"/>
+	<field name="detalleventas_idproductos" class="java.lang.Integer"/>
+	<field name="detalleventas_det_precio" class="java.lang.Integer"/>
+	<field name="detalleventas_det_cantidad" class="java.lang.Integer"/>
+	<field name="productos_idproductos" class="java.lang.Integer"/>
+	<field name="productos_pro_nombre" class="java.lang.String"/>
+	<field name="productos_iva" class="java.lang.String"/>
+	<field name="exenta" class="java.lang.String"/>
+	<field name="cinco" class="java.lang.String"/>
+	<field name="diez" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="68" height="20" uuid="afcaf53c-81da-4d8b-9d3d-d1e1ffd4a20b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{detalleventas_det_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="0" width="215" height="20" uuid="6d96169d-5320-4a60-9791-1d7fa16bd630"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_pro_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="296" y="0" width="60" height="20" uuid="19201ff3-67ad-4b08-a272-4f21a7dc8754"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{detalleventas_det_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="72" height="20" uuid="43d9fdca-1e41-4ec3-93f7-d04d4d440767"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{exenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="65" height="20" uuid="133817cf-5152-4529-ae71-0cce1200c35d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cinco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="62" height="20" uuid="17f4f38a-ffb9-4033-bb1c-926f265ee411"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{diez}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
